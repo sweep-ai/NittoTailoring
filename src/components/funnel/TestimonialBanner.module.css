@@ -1,0 +1,82 @@
+.root {
+  width: 100%;
+}
+
+.placeholder {
+  height: 220px;
+}
+
+.banner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: var(--space-8);
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  gap: var(--space-4);
+  animation: scroll 80s linear infinite;
+}
+
+.banner:hover .track {
+  animation-play-state: paused;
+}
+
+.slide {
+  flex-shrink: 0;
+  margin: 0;
+  border: var(--frame-border-width) solid var(--color-navy);
+  background-color: var(--color-white);
+}
+
+.image {
+  display: block;
+  height: 220px;
+  width: auto;
+  object-fit: cover;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 640px) {
+  .placeholder {
+    height: 160px;
+  }
+
+  .image {
+    height: 160px;
+  }
+
+  .track {
+    gap: var(--space-3);
+    animation-duration: 60s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner {
+    overflow-x: auto;
+    mask-image: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .track {
+    animation: none;
+  }
+}
