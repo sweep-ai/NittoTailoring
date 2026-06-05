@@ -3,25 +3,25 @@ import type { QuizAnswers, VslPageContent } from '@/types/quiz'
 
 const resultPhrases: Record<QuizAnswers['result'], string> = {
   A: 'lean out and drop body fat',
-  B: 'build muscle and confidence behind your strength',
-  C: 'look sharper and feel move with confidence',
-  D: 'stay in shape without starting over',
-  E: 'get your energy and edge back',
+  B: 'build muscle and actually look strong',
+  C: 'look sharp and feel confident',
+  D: 'stay consistent through travel and busy seasons',
+  E: 'get more energy and clarity through long weeks',
 }
 
 const holdingBackHeadlines: Record<QuizAnswers['holdingBack'], string> = {
-  A: 'You do not need more motivation. You need a plan that survives travel and a full calendar.',
-  B: 'More gym time is not the answer. You need training and nutrition that change how you look.',
-  C: 'Eating clean is not enough when stress and recovery work against you.',
-  D: 'The gap is not knowledge. It is direction so you stop guessing every week.',
-  E: 'You should not have to become a fitness expert. You need a system you can trust.',
+  A: 'You do not need more discipline. You need a plan that holds when work or travel ramps up.',
+  B: 'Fitting in workouts is not the issue. You need training that changes how you look.',
+  C: 'Eating well at home is not enough when dinners, events, and travel are in the mix.',
+  D: 'You do not need more information. You need clear direction and less guesswork.',
+  E: 'When sleep and recovery are off, willpower is not the fix. You need structure that accounts for it.',
 }
 
 const occupationContext: Record<QuizAnswers['occupation'], string> = {
-  A: 'Built for desk days and schedules that break most programs.',
-  B: 'Designed for high performers who cannot afford to burn out chasing fitness.',
-  C: 'Built for active days, recovery, and sustainable energy.',
-  D: 'A clear path so momentum does not depend on perfect conditions.',
+  A: 'Built for desk bound weeks and the kind of schedule that breaks most programs.',
+  B: 'Built for high pressure roles with long or unpredictable hours.',
+  C: 'Built for active days with recovery and energy that actually last.',
+  D: 'A clear path that works even when your schedule is in flux.',
 }
 
 function firstName(name: string): string {

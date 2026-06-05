@@ -37,6 +37,58 @@
   border-radius: 0;
 }
 
+.expectChecklist {
+  margin-top: var(--space-8);
+  max-width: 40rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--space-6);
+  background-color: var(--color-white);
+  border: var(--frame-border-width) solid var(--color-navy);
+}
+
+.expectTitle {
+  margin-bottom: var(--space-5);
+  font-family: var(--font-family);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-navy);
+  text-align: center;
+}
+
+.expectList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.expectItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text);
+}
+
+.expectItem::before {
+  flex-shrink: 0;
+  content: '✓';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  background-color: var(--color-gold);
+  border-radius: var(--radius-sm);
+}
+
 .stepLabel {
   display: block;
   width: 100%;
@@ -69,5 +121,9 @@
 
   .stepLabel {
     padding: var(--space-3) var(--space-4);
+  }
+
+  .expectChecklist {
+    padding: var(--space-4);
   }
 }

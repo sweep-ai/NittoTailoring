@@ -30,6 +30,16 @@ export function ThankYouPage() {
             autoplayOnLoad
           />
         </div>
+        <div className={styles.expectChecklist}>
+          <h4 className={styles.expectTitle}>{thankYouContent.whatToExpectTitle}</h4>
+          <ol className={styles.expectList}>
+            {thankYouContent.whatToExpectItems.map((item) => (
+              <li key={item} className={styles.expectItem}>
+                {item}
+              </li>
+            ))}
+          </ol>
+        </div>
       </section>
 
       <section className={styles.section}>

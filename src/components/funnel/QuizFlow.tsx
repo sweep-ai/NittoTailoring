@@ -140,7 +140,7 @@ export function QuizFlow() {
       >
       {step?.type === 'name' && (
         <div className={styles.step}>
-          <h2 className={styles.prompt}>Lets start with your name.</h2>
+          <h2 className={styles.prompt}>What should we call you?</h2>
           <label className={styles.srOnly} htmlFor="quiz-name">
             Your name
           </label>
@@ -182,7 +182,7 @@ export function QuizFlow() {
       {step?.type === 'instagram' && (
         <div className={styles.step}>
           <h2 className={styles.prompt}>What's your Instagram @?</h2>
-          <p className={styles.hint}>So we can find past conversations with you.</p>
+          <p className={styles.hint}>So we can find you if we have talked before.</p>
           <label className={styles.srOnly} htmlFor="quiz-instagram">
             Instagram handle
           </label>
@@ -194,13 +194,14 @@ export function QuizFlow() {
             value={form.instagram}
             onChange={(event) => setForm({ ...form, instagram: event.target.value })}
             autoComplete="username"
+            required
           />
         </div>
       )}
 
       {step?.type === 'contact' && (
         <div className={styles.step}>
-          <h2 className={styles.prompt}>Where should we send your training?</h2>
+          <h2 className={styles.prompt}>Where should we send your training link?</h2>
           <div className={styles.contactFields}>
             <label className={styles.fieldLabel} htmlFor="quiz-email">
               Email

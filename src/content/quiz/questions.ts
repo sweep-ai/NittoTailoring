@@ -7,41 +7,56 @@ export type QuizOption<T extends string = QuizChoiceId> = {
 
 export const resultQuestion = {
   id: 'result' as const,
-  prompt: "What's the #1 result you want right now?",
+  prompt: 'What do you want most right now?',
   required: true,
   options: [
     { id: 'A' as QuizChoiceId, label: 'Drop 20 to 30 pounds and look lean' },
-    { id: 'B' as QuizChoiceId, label: 'Build muscle and look and feel strong' },
-    { id: 'C' as QuizChoiceId, label: 'Look better in clothes and feel confident' },
-    { id: 'D' as QuizChoiceId, label: "Stay in shape for life (no more yo yo'ing)" },
-    { id: 'E' as QuizChoiceId, label: 'Improve energy and feel your best' },
+    { id: 'B' as QuizChoiceId, label: 'Build muscle and look strong, not just less soft' },
+    { id: 'C' as QuizChoiceId, label: 'Look sharp in a suit and feel confident' },
+    { id: 'D' as QuizChoiceId, label: 'Stay consistent through travel and busy seasons' },
+    { id: 'E' as QuizChoiceId, label: 'More energy and clarity through long weeks' },
   ] satisfies QuizOption[],
 }
 
 export const holdingBackQuestion = {
   id: 'holdingBack' as const,
-  prompt: "What's been holding you back?",
+  prompt: 'What sounds most familiar?',
   required: true,
   options: [
     {
       id: 'A' as QuizChoiceId,
-      label: 'I start strong but fall off when life gets in the way',
+      label: 'My routine falls apart when work or travel ramps up',
     },
-    { id: 'B' as QuizChoiceId, label: "I work out, but my body doesn't change" },
-    { id: 'C' as QuizChoiceId, label: 'I eat healthy, but nothing shifts' },
-    { id: 'D' as QuizChoiceId, label: "I know what to do, I'm just not doing it" },
-    { id: 'E' as QuizChoiceId, label: "I'm not confident in my training or nutrition" },
+    { id: 'B' as QuizChoiceId, label: 'I train when I can, but my body does not change' },
+    {
+      id: 'C' as QuizChoiceId,
+      label: 'I eat well at home, but dinners, events, and travel throw me off',
+    },
+    {
+      id: 'D' as QuizChoiceId,
+      label: 'I know the basics. I need clear direction and less guesswork',
+    },
+    {
+      id: 'E' as QuizChoiceId,
+      label: 'Sleep, recovery, and energy are off, and it shows',
+    },
   ] satisfies QuizOption[],
 }
 
 export const occupationQuestion = {
   id: 'occupation' as const,
-  prompt: 'My occupation is…',
+  prompt: 'What best describes your work?',
   required: true,
   options: [
-    { id: 'A' as OccupationChoiceId, label: 'Sedentary. Full time at a desk' },
-    { id: 'B' as OccupationChoiceId, label: 'High stress, high pressure role' },
-    { id: 'C' as OccupationChoiceId, label: 'Very active. On my feet most of the day' },
-    { id: 'D' as OccupationChoiceId, label: 'Part time or unemployed' },
+    {
+      id: 'A' as OccupationChoiceId,
+      label: 'Mostly at a desk (law, finance, corporate, consulting)',
+    },
+    {
+      id: 'B' as OccupationChoiceId,
+      label: 'High pressure role with long or unpredictable hours',
+    },
+    { id: 'C' as OccupationChoiceId, label: 'On my feet or physically active most of the day' },
+    { id: 'D' as OccupationChoiceId, label: 'Between roles or a lighter schedule right now' },
   ] satisfies QuizOption<OccupationChoiceId>[],
 }

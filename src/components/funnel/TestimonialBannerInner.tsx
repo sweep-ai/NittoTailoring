@@ -1,8 +1,9 @@
-import { testimonialPhotos } from '@/content/testimonialPhotos'
+import { testimonialPhotos, testimonialSlideSize } from '@/content/testimonialPhotos'
 import styles from './TestimonialBanner.module.css'
 
 export function TestimonialBannerInner() {
   const slides = [...testimonialPhotos, ...testimonialPhotos]
+  const { width, height } = testimonialSlideSize
 
   return (
     <div className={styles.banner} aria-label="Member before and after results">
@@ -13,9 +14,11 @@ export function TestimonialBannerInner() {
               src={photo.src}
               alt={photo.alt}
               className={styles.image}
-              loading="lazy"
+              width={width}
+              height={height}
+              loading="eager"
               decoding="async"
-              fetchPriority="low"
+              fetchPriority={index < 4 ? 'high' : 'auto'}
             />
           </figure>
         ))}

@@ -17,6 +17,12 @@ export type TestimonialPhoto = {
   alt: string
 }
 
+/** Display size for banner slides (source assets are 640×640). */
+export const testimonialSlideSize = {
+  width: 220,
+  height: 220,
+} as const
+
 export const testimonialPhotos: TestimonialPhoto[] = [
   { id: 'photo-01', src: photo01, alt: 'Before and after transformation 1' },
   { id: 'photo-02', src: photo02, alt: 'Before and after transformation 2' },

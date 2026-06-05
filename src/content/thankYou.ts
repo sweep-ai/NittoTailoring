@@ -1,7 +1,14 @@
 export const thankYouContent = {
   congratulations: 'CONGRATULATIONS!',
   subheadline: 'Your appointment is now scheduled.',
-  step1Label: 'Step 1: Watch this full video before the next step',
+  step1Label: 'Step 1: Watch this full video and read below',
+  whatToExpectTitle: 'What to expect next',
+  whatToExpectItems: [
+    'Check your email for call details',
+    'Show up excited and ready to learn',
+    'Bring pen and paper if needed',
+    'Join in a quiet place with strong WiFi',
+  ],
   step2Label: 'Step 2: Watch These Commonly Asked Questions',
   step3Label:
     'Step 3: See the results ARS members achieved and hear about their experience with us.',
