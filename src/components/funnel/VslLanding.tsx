@@ -57,7 +57,7 @@ export function VslLanding({
           <VimeoPlayer
             vimeoId={content.vimeoId}
             vimeoHash={content.vimeoHash}
-            title="Program overview video"
+            title={content.vimeoTitle ?? 'Program overview video'}
             className={styles.mainVslVideo}
             autoplayOnLoad={autoplayOnLoad}
           />

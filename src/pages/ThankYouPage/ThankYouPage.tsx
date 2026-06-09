@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useEffect, useLayoutEffect } from 'react'
 import { PageShell } from '@/components/layout/PageShell'
 import { VimeoPlayer } from '@/components/media/VimeoPlayer'
@@ -38,6 +39,14 @@ export function ThankYouPage() {
         <div className={styles.expectChecklist}>
           <h4 className={styles.expectTitle}>{thankYouContent.whatToExpectTitle}</h4>
           <ol className={styles.expectList}>
+            <li className={styles.expectItem}>
+              <div className={styles.expectItemContent}>
+                <p>{thankYouContent.quizStep.label}</p>
+                <Link to={thankYouContent.quizStep.href} className={styles.quizCta}>
+                  {thankYouContent.quizStep.ctaLabel}
+                </Link>
+              </div>
+            </li>
             {thankYouContent.whatToExpectItems.map((item) => (
               <li key={item} className={styles.expectItem}>
                 {item}

@@ -89,6 +89,30 @@
   border-radius: var(--radius-sm);
 }
 
+.expectItemContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.quizCta {
+  display: inline-block;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  color: var(--color-white);
+  background-color: var(--color-navy);
+  border: 1px solid var(--color-navy);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+}
+
+.quizCta:hover {
+  background-color: var(--color-navy-light);
+}
+
 .stepLabel {
   display: block;
   width: 100%;

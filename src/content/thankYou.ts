@@ -3,10 +3,14 @@ export const thankYouContent = {
   subheadline: 'Your appointment is now scheduled.',
   step1Label: 'Step 1: Watch this full video and read below',
   whatToExpectTitle: 'What to expect next',
+  quizStep: {
+    label: 'Complete the fitness self assessment and screenshot your results.',
+    ctaLabel: 'Start self assessment',
+    href: '/quiz?from=thank-you',
+  },
   whatToExpectItems: [
     'Check your email for call details',
     'Show up excited and ready to learn',
-    'Bring pen and paper if needed',
     'Join in a quiet place with strong WiFi',
   ],
   step2Label: 'Step 2: Watch These Commonly Asked Questions',

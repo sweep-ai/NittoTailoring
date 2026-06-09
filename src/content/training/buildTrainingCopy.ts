@@ -10,18 +10,18 @@ const resultPhrases: Record<QuizAnswers['result'], string> = {
 }
 
 const holdingBackHeadlines: Record<QuizAnswers['holdingBack'], string> = {
-  A: 'You do not need more discipline. You need a plan that holds when work or travel ramps up.',
-  B: 'Fitting in workouts is not the issue. You need training that changes how you look.',
-  C: 'Eating well at home is not enough when dinners, events, and travel are in the mix.',
-  D: 'You do not need more information. You need clear direction and less guesswork.',
-  E: 'When sleep and recovery are off, willpower is not the fix. You need structure that accounts for it.',
+  A: 'You don\'t need more discipline. You need a plan that holds when work or travel ramps up.',
+  B: 'Fitting in workouts isn\'t the issue. You need training that changes how you look.',
+  C: 'Eating well at home isn\'t enough when dinners, events, and travel are in the mix.',
+  D: 'You don\'t need more info. You need clear direction and less guesswork.',
+  E: 'When sleep and recovery are off, willpower isn\'t the fix. You need structure.',
 }
 
 const occupationContext: Record<QuizAnswers['occupation'], string> = {
-  A: 'Built for desk bound weeks and the kind of schedule that breaks most programs.',
-  B: 'Built for high pressure roles with long or unpredictable hours.',
-  C: 'Built for active days with recovery and energy that actually last.',
-  D: 'A clear path that works even when your schedule is in flux.',
+  A: 'Built for desk bound weeks and schedules that break most programs.',
+  B: 'Built for high pressure roles with long, unpredictable hours.',
+  C: 'Built for active days with recovery and energy that lasts.',
+  D: 'A clear path that works even when your schedule fluctuates.',
 }
 
 function firstName(name: string): string {
@@ -40,6 +40,6 @@ export function buildTrainingCopy(answers: QuizAnswers): VslPageContent {
     stepLabel: `${name}, watch this before you book.`,
     ctaLabel: 'BOOK YOUR CONSULTATION',
     vimeoId: applyContent.vimeoId,
-    vimeoHash: applyContent.vimeoHash,
+    vimeoTitle: applyContent.vimeoTitle,
   }
 }

@@ -10,7 +10,7 @@ export function ApplyPage() {
         stepLabel: applyContent.stepLabel,
         ctaLabel: applyContent.ctaLabel,
         vimeoId: applyContent.vimeoId,
-        vimeoHash: applyContent.vimeoHash,
+        vimeoTitle: applyContent.vimeoTitle,
       }}
     />
   )

@@ -20,5 +20,6 @@ export type VslPageContent = {
   applicationInstructions?: string
   ctaLabel: string
   vimeoId: string
-  vimeoHash: string
+  vimeoHash?: string
+  vimeoTitle?: string
 }

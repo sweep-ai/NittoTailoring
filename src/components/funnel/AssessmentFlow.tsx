@@ -32,6 +32,7 @@ type AssessmentFlowProps = {
   productLabel?: string
   introTitle?: string
   introSubtitle?: string
+  returnToThankYou?: boolean
   onComplete?: () => void
 }
 
@@ -39,6 +40,7 @@ export function AssessmentFlow({
   productLabel = 'Fitness assessment',
   introTitle,
   introSubtitle,
+  returnToThankYou = false,
   onComplete,
 }: AssessmentFlowProps) {
   const [stepIndex, setStepIndex] = useState(0)
@@ -117,7 +119,7 @@ export function AssessmentFlow({
   }
 
   if (result) {
-    return <AssessmentResults result={result} />
+    return <AssessmentResults result={result} returnToThankYou={returnToThankYou} />
   }
 
   const currentQuestion = step?.type === 'choice' ? assessmentQuestions[step.questionIndex] : null

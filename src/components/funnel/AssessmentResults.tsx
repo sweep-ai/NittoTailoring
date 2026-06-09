@@ -3,6 +3,7 @@ import { assessmentLanding } from '@/content/assessment/landing'
 import { buildAssessmentResultsCopy } from '@/content/assessment/buildResultsCopy'
 import { categoryDescriptions, categoryLabels } from '@/content/assessment/questions'
 import { getGapTier } from '@/content/assessment/scoring'
+import { clearAssessmentFromThankYou } from '@/lib/assessmentReferrer'
 import type { AssessmentCategory, AssessmentResult } from '@/types/assessment'
 import styles from './AssessmentResults.module.css'
 
@@ -16,9 +17,10 @@ const categoryOrder: AssessmentCategory[] = [
 
 type AssessmentResultsProps = {
   result: AssessmentResult
+  returnToThankYou?: boolean
 }
 
-export function AssessmentResults({ result }: AssessmentResultsProps) {
+export function AssessmentResults({ result, returnToThankYou = false }: AssessmentResultsProps) {
   const copy = buildAssessmentResultsCopy(result)
   const tier = getGapTier(result.overallGap)
 
@@ -81,12 +83,27 @@ export function AssessmentResults({ result }: AssessmentResultsProps) {
       </section>
 
       <div className={styles.actions}>
-        <Link to="/booking" className={styles.primaryCta}>
-          Book your discovery call
-        </Link>
-        <p className={styles.ctaHint}>
-          Bring this score with you. The call works best when you already know where you are stuck.
-        </p>
+        {returnToThankYou ? (
+          <>
+            <Link
+              to="/thank-you"
+              className={styles.primaryCta}
+              onClick={() => clearAssessmentFromThankYou()}
+            >
+              {assessmentLanding.returnToThankYou.ctaLabel}
+            </Link>
+            <p className={styles.ctaHint}>{assessmentLanding.returnToThankYou.hint}</p>
+          </>
+        ) : (
+          <>
+            <Link to="/booking" className={styles.primaryCta}>
+              Book your discovery call
+            </Link>
+            <p className={styles.ctaHint}>
+              Bring this score with you. The call works best when you already know where you are stuck.
+            </p>
+          </>
+        )}
       </div>
     </div>
   )
