@@ -16,6 +16,8 @@ export type VslPageContent = {
   eyebrow: string
   headline: string
   stepLabel: string
+  instructions?: string
+  applicationInstructions?: string
   ctaLabel: string
   vimeoId: string
   vimeoHash: string

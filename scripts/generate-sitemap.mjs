@@ -6,9 +6,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const routes = [
   { path: '/', changefreq: 'weekly', priority: '1.0' },
+  { path: '/quiz', changefreq: 'monthly', priority: '0.9' },
   { path: '/applynow', changefreq: 'monthly', priority: '0.9' },
   { path: '/training', changefreq: 'monthly', priority: '0.7' },
   { path: '/thank-you', changefreq: 'monthly', priority: '0.5' },
+  { path: '/booking', changefreq: 'monthly', priority: '0.8' },
   { path: '/privacy-policy', changefreq: 'yearly', priority: '0.3' },
   { path: '/terms', changefreq: 'yearly', priority: '0.3' },
   { path: '/disclaimer', changefreq: 'yearly', priority: '0.3' },

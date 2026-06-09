@@ -35,7 +35,7 @@ npm run preview
 Copy `.env.example` to `.env` to override defaults:
 
 ```env
-VITE_TYPEFORM_ID=e7hmzb8G
+VITE_TYPEFORM_LIVE_ID=01KTNBNYDMJSH7PKS373QG2AJF
 VITE_SITE_NAME=Alpha Reset System
 VITE_CONTACT_EMAIL=hello@example.com
 VITE_SITE_URL=https://your-production-domain.com
@@ -93,4 +93,4 @@ import logo from '@assets/logos/logo.png'
 - Vite + React 19 + TypeScript
 - React Router 7
 - CSS Modules + CSS custom properties
-- @typeform/embed-react
+- Typeform live embed (`embed.typeform.com/next/embed.js`)

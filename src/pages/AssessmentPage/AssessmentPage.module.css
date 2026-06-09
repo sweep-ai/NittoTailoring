@@ -1,4 +1,4 @@
-.quizPage {
+.page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -6,17 +6,8 @@
   background-color: var(--color-bg-card);
 }
 
-.bannerSection {
-  margin-top: var(--space-12);
-  padding: 0 var(--space-4);
-}
-
 @media (max-width: 640px) {
-  .quizPage {
+  .page {
     padding: var(--space-6) 0 var(--space-10);
-  }
-
-  .bannerSection {
-    margin-top: var(--space-10);
   }
 }

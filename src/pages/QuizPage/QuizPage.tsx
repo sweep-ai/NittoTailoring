@@ -8,11 +8,11 @@ export function QuizPage() {
   return (
     <div className={styles.quizPage}>
       <PageShell headerLabel={quizLanding.headerLabel}>
-        <header className={styles.intro}>
-          <h1 className={styles.title}>{quizLanding.title}</h1>
-          <p className={styles.subtitle}>{quizLanding.subtitle}</p>
-        </header>
-        <QuizFlow />
+        <QuizFlow
+          productLabel="Personalize Your Resource"
+          introTitle={quizLanding.title}
+          introSubtitle={quizLanding.subtitle}
+        />
         <section className={styles.bannerSection} aria-label="Member results">
           <TestimonialBanner />
         </section>

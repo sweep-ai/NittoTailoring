@@ -7,6 +7,8 @@ import {
 } from '@/content/quiz/questions'
 import { saveQuizAnswers } from '@/lib/quizStorage'
 import type { OccupationChoiceId, QuizAnswers, QuizChoiceId } from '@/types/quiz'
+import { FunnelToolShell } from './FunnelToolShell'
+import shellStyles from './FunnelToolShell.module.css'
 import styles from './QuizFlow.module.css'
 
 type ChoiceStepKey = 'result' | 'holdingBack' | 'occupation'
@@ -49,7 +51,17 @@ const initialState: FormState = {
 
 const CHOICE_ADVANCE_MS = 220
 
-export function QuizFlow() {
+type QuizFlowProps = {
+  productLabel?: string
+  introTitle?: string
+  introSubtitle?: string
+}
+
+export function QuizFlow({
+  productLabel = 'Training quiz',
+  introTitle,
+  introSubtitle,
+}: QuizFlowProps) {
   const navigate = useNavigate()
   const [stepIndex, setStepIndex] = useState(0)
   const [form, setForm] = useState<FormState>(initialState)
@@ -126,12 +138,34 @@ export function QuizFlow() {
     setStepIndex((current) => current - 1)
   }
 
-  return (
-    <div className={styles.flow}>
-      <div className={styles.progressTrack} aria-hidden="true">
-        <div className={styles.progressBar} style={{ width: `${progress}%` }} />
-      </div>
+  const showIntro = stepIndex === 0 && Boolean(introTitle || introSubtitle)
 
+  const footer =
+    stepIndex > 0 || !isChoiceStep ? (
+      <div className={`${shellStyles.footerActions} ${isChoiceStep ? shellStyles.footerBackOnly : ''}`}>
+        {stepIndex > 0 && (
+          <button type="button" className={styles.backButton} onClick={goBack}>
+            Back
+          </button>
+        )}
+        {!isChoiceStep && (
+          <button type="button" className={styles.nextButton} onClick={goNext}>
+            {stepIndex === steps.length - 1 ? 'See my plan' : 'Continue'}
+          </button>
+        )}
+      </div>
+    ) : undefined
+
+  return (
+    <FunnelToolShell
+      productLabel={productLabel}
+      stepIndex={stepIndex}
+      stepTotal={steps.length}
+      progress={progress}
+      title={showIntro ? introTitle : undefined}
+      subtitle={showIntro ? introSubtitle : undefined}
+      footer={footer}
+    >
       <div
         key={stepIndex}
         className={`${styles.stepPanel} ${
@@ -171,7 +205,7 @@ export function QuizFlow() {
                   onChange={() => handleChoiceSelect(step.key, option.id)}
                   className={styles.optionInput}
                 />
-                <span className={styles.optionLetter}>{option.id}</span>
+                <span className={styles.optionRadio} aria-hidden="true" />
                 <span className={styles.optionLabel}>{option.label}</span>
               </label>
             ))}
@@ -233,21 +267,6 @@ export function QuizFlow() {
 
       {error && <p className={styles.error}>{error}</p>}
       </div>
-
-      {(stepIndex > 0 || !isChoiceStep) && (
-        <div className={`${styles.actions} ${isChoiceStep ? styles.actionsBackOnly : ''}`}>
-          {stepIndex > 0 && (
-            <button type="button" className={styles.backButton} onClick={goBack}>
-              Back
-            </button>
-          )}
-          {!isChoiceStep && (
-            <button type="button" className={styles.nextButton} onClick={goNext}>
-              {stepIndex === steps.length - 1 ? 'See my plan' : 'Continue'}
-            </button>
-          )}
-        </div>
-      )}
-    </div>
+    </FunnelToolShell>
   )
 }

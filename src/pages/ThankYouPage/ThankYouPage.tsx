@@ -1,3 +1,4 @@
+import { useEffect, useLayoutEffect } from 'react'
 import { PageShell } from '@/components/layout/PageShell'
 import { VimeoPlayer } from '@/components/media/VimeoPlayer'
 import { warmVimeoPlayer } from '@/components/media/vimeo'
@@ -6,10 +7,14 @@ import { TestimonialBanner } from '@/components/funnel/TestimonialBanner'
 import { thankYouContent } from '@/content/thankYou'
 import { faqVideos } from '@/content/faqVideos'
 import { testimonialVideos } from '@/content/testimonialVideos'
-import { useEffect } from 'react'
+import { scrollToTop } from '@/lib/scrollToTop'
 import styles from './ThankYouPage.module.css'
 
 export function ThankYouPage() {
+  useLayoutEffect(() => {
+    scrollToTop()
+  }, [])
+
   useEffect(() => {
     warmVimeoPlayer(thankYouContent.mainVimeoId)
   }, [])

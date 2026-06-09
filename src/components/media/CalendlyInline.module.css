@@ -1,0 +1,30 @@
+.widget {
+  width: 100%;
+  min-width: 320px;
+  height: 700px;
+  overflow: hidden;
+}
+
+.widget :global(.calendly-inline-widget),
+.widget :global(.calendly-inline-widget iframe) {
+  width: 100%;
+  min-width: 320px;
+  height: 700px;
+}
+
+.fallbackFrame {
+  display: block;
+  width: 100%;
+  min-width: 320px;
+  height: 700px;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .widget,
+  .widget :global(.calendly-inline-widget),
+  .widget :global(.calendly-inline-widget iframe),
+  .fallbackFrame {
+    height: 900px;
+  }
+}

@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { PageShell } from '@/components/layout/PageShell'
 import { VimeoPlayer } from '@/components/media/VimeoPlayer'
 import { warmVimeoPlayer } from '@/components/media/vimeo'
 import { ApplyCta } from '@/components/funnel/ApplyCta'
 import { TestimonialBanner } from '@/components/funnel/TestimonialBanner'
-import { TypeformModal } from '@/components/funnel/TypeformModal'
+import { TypeformLiveOverlay } from '@/components/funnel/TypeformLiveOverlay'
+import { useTypeformPopup } from '@/hooks/useTypeformPopup'
+import { warmTypeformLiveEmbed } from '@/lib/typeformLive'
 import type { TestimonialVideo } from '@/content/testimonialVideos'
 import type { VslPageContent } from '@/types/quiz'
 import styles from '@/pages/ApplyPage/ApplyPage.module.css'
@@ -20,7 +22,11 @@ export function VslLanding({
   autoplayOnLoad = true,
   featuredTestimonials,
 }: VslLandingProps) {
-  const [isTypeformOpen, setIsTypeformOpen] = useState(false)
+  const { isTypeformOpen, openTypeform, closeTypeform, completeTypeform } = useTypeformPopup()
+
+  useEffect(() => {
+    warmTypeformLiveEmbed()
+  }, [])
 
   useEffect(() => {
     warmVimeoPlayer(content.vimeoId, content.vimeoHash)
@@ -32,19 +38,17 @@ export function VslLanding({
     })
   }, [featuredTestimonials])
 
-  const openTypeform = useCallback(() => {
-    setIsTypeformOpen(true)
-  }, [])
-
-  const closeTypeform = useCallback(() => {
-    setIsTypeformOpen(false)
-  }, [])
-
   return (
     <PageShell>
       <section className={styles.hero}>
         <p className={styles.eyebrow}>{content.eyebrow}</p>
         <h2 className={styles.headline}>{content.headline}</h2>
+        {content.instructions ? (
+          <div className={styles.instructionsCallout} role="note">
+            <p className={styles.instructionsTitle}>Before you continue</p>
+            <p className={styles.instructionsText}>{content.instructions}</p>
+          </div>
+        ) : null}
       </section>
 
       <section className={styles.videoSection}>
@@ -82,7 +86,11 @@ export function VslLanding({
         </section>
       )}
 
-      <TypeformModal isOpen={isTypeformOpen} onClose={closeTypeform} />
+      <TypeformLiveOverlay
+        isOpen={isTypeformOpen}
+        onClose={closeTypeform}
+        onComplete={completeTypeform}
+      />
     </PageShell>
   )
 }

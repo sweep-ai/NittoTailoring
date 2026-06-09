@@ -26,6 +26,31 @@
   margin-right: auto;
 }
 
+.instructionsCallout {
+  max-width: 40rem;
+  margin: var(--space-8) auto 0;
+  padding: var(--space-5) var(--space-6);
+  text-align: left;
+  background-color: #fff8e6;
+  border: 2px solid var(--color-gold);
+  border-radius: var(--radius-md, 8px);
+}
+
+.instructionsTitle {
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+}
+
+.instructionsText {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed, 1.6);
+  color: var(--color-navy);
+}
+
 .videoSection {
   margin-bottom: var(--space-10);
 }
