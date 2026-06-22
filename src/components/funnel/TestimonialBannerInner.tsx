@@ -1,8 +1,13 @@
-import { testimonialPhotos, testimonialSlideSize } from '@/content/testimonialPhotos'
+import type { TestimonialPhoto } from '@/content/testimonialPhotos'
+import { testimonialSlideSize } from '@/content/testimonialPhotos'
 import styles from './TestimonialBanner.module.css'
 
-export function TestimonialBannerInner() {
-  const slides = [...testimonialPhotos, ...testimonialPhotos]
+type TestimonialBannerInnerProps = {
+  photos: TestimonialPhoto[]
+}
+
+export function TestimonialBannerInner({ photos }: TestimonialBannerInnerProps) {
+  const slides = [...photos, ...photos]
   const { width, height } = testimonialSlideSize
 
   return (

@@ -5,6 +5,7 @@ import {
   occupationQuestion,
   resultQuestion,
 } from '@/content/quiz/questions'
+import { submitQuizLead } from '@/lib/funnelTrack'
 import { saveQuizAnswers } from '@/lib/quizStorage'
 import type { OccupationChoiceId, QuizAnswers, QuizChoiceId } from '@/types/quiz'
 import { FunnelToolShell } from './FunnelToolShell'
@@ -87,7 +88,7 @@ export function QuizFlow({
     }
   }, [form, step])
 
-  const submitQuiz = (nextForm: FormState) => {
+  const submitQuiz = async (nextForm: FormState) => {
     const answers: QuizAnswers = {
       name: nextForm.name.trim(),
       result: nextForm.result as QuizChoiceId,
@@ -98,6 +99,17 @@ export function QuizFlow({
       phone: nextForm.phone.trim(),
     }
     saveQuizAnswers(answers)
+    await submitQuizLead({
+      email: answers.email,
+      name: answers.name,
+      phone: answers.phone,
+      instagram: answers.instagram,
+      quizAnswers: {
+        result: answers.result,
+        holding_back: answers.holdingBack,
+        occupation: answers.occupation,
+      },
+    })
     navigate('/training')
   }
 

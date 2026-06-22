@@ -4,8 +4,10 @@ import { VimeoPlayer } from '@/components/media/VimeoPlayer'
 import { warmVimeoPlayer } from '@/components/media/vimeo'
 import { ApplyCta } from '@/components/funnel/ApplyCta'
 import { TestimonialBanner } from '@/components/funnel/TestimonialBanner'
+import { TypeformLiveEmbed } from '@/components/funnel/TypeformLiveEmbed'
 import { TypeformLiveOverlay } from '@/components/funnel/TypeformLiveOverlay'
 import { useTypeformPopup } from '@/hooks/useTypeformPopup'
+import { env } from '@/config/env'
 import { warmTypeformLiveEmbed } from '@/lib/typeformLive'
 import type { TestimonialVideo } from '@/content/testimonialVideos'
 import type { VslPageContent } from '@/types/quiz'
@@ -15,14 +17,21 @@ type VslLandingProps = {
   content: VslPageContent
   autoplayOnLoad?: boolean
   featuredTestimonials?: TestimonialVideo[]
+  typeformLiveId?: string
+  typeformInline?: boolean
+  typeformStepLabel?: string
 }
 
 export function VslLanding({
   content,
   autoplayOnLoad = true,
   featuredTestimonials,
+  typeformLiveId,
+  typeformInline = false,
+  typeformStepLabel,
 }: VslLandingProps) {
   const { isTypeformOpen, openTypeform, closeTypeform, completeTypeform } = useTypeformPopup()
+  const resolvedTypeformLiveId = typeformLiveId ?? env.typeformLiveId
 
   useEffect(() => {
     warmTypeformLiveEmbed()
@@ -62,13 +71,23 @@ export function VslLanding({
             autoplayOnLoad={autoplayOnLoad}
           />
         </div>
-        <div className={styles.ctaWrapper}>
-          <ApplyCta label={content.ctaLabel} onClick={openTypeform} fullWidth />
-        </div>
+        {typeformInline ? (
+          <section className={styles.typeformSection} aria-label="Application form">
+            {typeformStepLabel ? <h3 className={styles.stepLabel}>{typeformStepLabel}</h3> : null}
+            <TypeformLiveEmbed liveId={resolvedTypeformLiveId} onComplete={completeTypeform} />
+          </section>
+        ) : (
+          <div className={styles.ctaWrapper}>
+            <ApplyCta label={content.ctaLabel} onClick={openTypeform} fullWidth />
+          </div>
+        )}
       </section>
 
-      {featuredTestimonials ? (
+      {featuredTestimonials && featuredTestimonials.length > 0 ? (
         <section className={styles.testimonialsSection} aria-label="Member testimonials">
+          <div className={styles.bannerSection}>
+            <TestimonialBanner />
+          </div>
           <div className={styles.testimonialsGrid}>
             {featuredTestimonials.map((video) => (
               <VimeoPlayer
@@ -87,7 +106,8 @@ export function VslLanding({
       )}
 
       <TypeformLiveOverlay
-        isOpen={isTypeformOpen}
+        isOpen={!typeformInline && isTypeformOpen}
+        liveId={resolvedTypeformLiveId}
         onClose={closeTypeform}
         onComplete={completeTypeform}
       />

@@ -50,7 +50,7 @@ export const occupationQuestion = {
   options: [
     {
       id: 'A' as OccupationChoiceId,
-      label: 'Mostly at a desk (law, finance, corporate, consulting)',
+      label: 'Mostly at a desk all day',
     },
     {
       id: 'B' as OccupationChoiceId,

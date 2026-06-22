@@ -1,6 +1,7 @@
 import { Navigate } from 'react-router-dom'
 import { buildTrainingCopy } from '@/content/training/buildTrainingCopy'
-import { featuredTestimonialVideos } from '@/content/testimonialVideos'
+import { getAudience } from '@/config/audience'
+import { getFeaturedTestimonialVideos } from '@/content/testimonialVideos'
 import { loadQuizAnswers } from '@/lib/quizStorage'
 import { VslLanding } from '@/components/funnel/VslLanding'
 
@@ -14,6 +15,9 @@ export function TrainingPage() {
   const content = buildTrainingCopy(answers)
 
   return (
-    <VslLanding content={content} featuredTestimonials={featuredTestimonialVideos} />
+    <VslLanding
+      content={content}
+      featuredTestimonials={getFeaturedTestimonialVideos(getAudience())}
+    />
   )
 }

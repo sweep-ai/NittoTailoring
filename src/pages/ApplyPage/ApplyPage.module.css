@@ -90,12 +90,25 @@
   margin-right: auto;
 }
 
+.typeformSection {
+  margin-top: var(--space-10);
+}
+
+.typeformSection .stepLabel {
+  margin-bottom: 0;
+}
+
 .bannerSection {
   margin-top: var(--space-12);
 }
 
 .testimonialsSection {
   margin-top: var(--space-12);
+}
+
+.testimonialsSection .bannerSection {
+  margin-top: 0;
+  margin-bottom: var(--space-10);
 }
 
 .testimonialsGrid {

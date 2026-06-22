@@ -9,11 +9,17 @@ const ENDING_HANDLER = 'arsTypeformOnEnding'
 
 type TypeformLiveOverlayProps = {
   isOpen: boolean
+  liveId?: string
   onClose: () => void
   onComplete: () => void
 }
 
-export function TypeformLiveOverlay({ isOpen, onClose, onComplete }: TypeformLiveOverlayProps) {
+export function TypeformLiveOverlay({
+  isOpen,
+  liveId = env.typeformLiveId,
+  onClose,
+  onComplete,
+}: TypeformLiveOverlayProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [loadError, setLoadError] = useState(false)
 
@@ -40,7 +46,7 @@ export function TypeformLiveOverlay({ isOpen, onClose, onComplete }: TypeformLiv
     loadTypeformEmbedScript()
       .then(() => {
         if (cancelled || !containerRef.current) return
-        mountTypeformLiveEmbed(containerRef.current, env.typeformLiveId, {
+        mountTypeformLiveEmbed(containerRef.current, liveId, {
           onSubmit: SUBMIT_HANDLER,
           onEndingButtonClick: ENDING_HANDLER,
         })
@@ -52,7 +58,7 @@ export function TypeformLiveOverlay({ isOpen, onClose, onComplete }: TypeformLiv
     return () => {
       cancelled = true
     }
-  }, [isOpen])
+  }, [isOpen, liveId])
 
   useEffect(() => {
     if (!isOpen) return

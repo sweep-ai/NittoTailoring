@@ -7,7 +7,8 @@ import { FaqAccordion } from '@/components/funnel/FaqAccordion'
 import { TestimonialBanner } from '@/components/funnel/TestimonialBanner'
 import { thankYouContent } from '@/content/thankYou'
 import { faqVideos } from '@/content/faqVideos'
-import { testimonialVideos } from '@/content/testimonialVideos'
+import { getAudience } from '@/config/audience'
+import { getTestimonialVideos } from '@/content/testimonialVideos'
 import { scrollToTop } from '@/lib/scrollToTop'
 import styles from './ThankYouPage.module.css'
 
@@ -65,7 +66,7 @@ export function ThankYouPage() {
         <h3 className={styles.stepLabel}>{thankYouContent.step3Label}</h3>
         <TestimonialBanner />
         <div className={styles.testimonialsGrid}>
-          {testimonialVideos.map((video) => (
+          {getTestimonialVideos(getAudience()).map((video) => (
             <VimeoPlayer
               key={video.id}
               vimeoId={video.vimeoId}

@@ -32,13 +32,52 @@ npm run preview
 
 ## Environment variables
 
-Copy `.env.example` to `.env` to override defaults:
+Copy `.env.example` to `.env`:
+
+```bash
+cp .env.example .env
+```
+
+### Funnel tracking (local)
+
+With the Sweep API running locally (default `http://localhost:8000`):
+
+```env
+VITE_FUNNEL_ID=ee46f8a6-ace5-4dd1-9279-abf58ae6ae9c
+VITE_API_BASE_URL=/sweep-api
+VITE_API_PROXY_TARGET=http://localhost:8000
+VITE_FUNNEL_TRACK_DEBUG=true
+```
+
+`npm run dev` proxies `/sweep-api/*` → your API so the browser avoids CORS. Open the console, visit `/`, and you should see `quiz_page_view` logged and accepted.
+
+To test against production API from localhost:
+
+```env
+VITE_API_BASE_URL=/sweep-api
+VITE_API_PROXY_TARGET=https://api.sweepai.site
+```
+
+### Funnel tracking (production)
+
+Set on Vercel (no proxy — call the API directly):
+
+```env
+VITE_API_BASE_URL=https://api.sweepai.site
+VITE_FUNNEL_ID=ee46f8a6-ace5-4dd1-9279-abf58ae6ae9c
+VITE_FUNNEL_TRACK_DEBUG=false
+```
+
+See [FUNNEL_STEPS.md](./FUNNEL_STEPS.md) for event names and curl examples.
+
+### Other variables
 
 ```env
 VITE_TYPEFORM_LIVE_ID=01KTNBNYDMJSH7PKS373QG2AJF
 VITE_SITE_NAME=Alpha Reset System
 VITE_CONTACT_EMAIL=hello@example.com
 VITE_SITE_URL=https://your-production-domain.com
+VITE_AUDIENCE=men
 ```
 
 ## Vercel deployment
