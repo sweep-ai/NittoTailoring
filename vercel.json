@@ -3,6 +3,10 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
+      "source": "/sweep-api/:path*",
+      "destination": "https://api.sweepai.site/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

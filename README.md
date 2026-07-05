@@ -60,13 +60,15 @@ VITE_API_PROXY_TARGET=https://api.sweepai.site
 
 ### Funnel tracking (production)
 
-Set on Vercel (no proxy — call the API directly):
+Set on Vercel. Use the **same-origin proxy path** — the Sweep API does not allow direct browser CORS from custom funnel domains (`Failed to fetch` in the console). `vercel.json` rewrites `/sweep-api/*` → `https://api.sweepai.site/*`:
 
 ```env
-VITE_API_BASE_URL=https://api.sweepai.site
+VITE_API_BASE_URL=/sweep-api
 VITE_FUNNEL_ID=ee46f8a6-ace5-4dd1-9279-abf58ae6ae9c
 VITE_FUNNEL_TRACK_DEBUG=false
 ```
+
+`https://api.sweepai.site` also works in env — production builds auto-route it through `/sweep-api`. **Redeploy after changing any `VITE_*` variable** (Vite bakes them in at build time).
 
 See [FUNNEL_STEPS.md](./FUNNEL_STEPS.md) for event names and curl examples.
 

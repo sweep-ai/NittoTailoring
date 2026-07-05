@@ -179,15 +179,12 @@ export function trackEvent(
       const message = error instanceof Error ? error.message : String(error)
       console.error('Sweep funnel tracking failed:', message)
 
-      if (
-        env.funnelTrackDebug &&
-        import.meta.env.DEV &&
-        !env.apiProxyTarget &&
-        env.apiBaseUrl.startsWith('http')
-      ) {
+      if (env.apiBaseUrl.startsWith('http')) {
         console.warn(
-          'Tip: direct cross-origin requests to the API are blocked by CORS in the browser. ' +
-            'Set VITE_API_PROXY_TARGET=https://api.sweepai.site in .env and restart npm run dev.',
+          'Tip: direct cross-origin requests to the Sweep API are blocked by CORS in the browser. ' +
+            (import.meta.env.DEV
+              ? 'Set VITE_API_PROXY_TARGET=https://api.sweepai.site in .env and restart npm run dev.'
+              : 'Set VITE_API_BASE_URL=/sweep-api on Vercel (or redeploy — production auto-routes api.sweepai.site through /sweep-api).'),
         )
       }
     })

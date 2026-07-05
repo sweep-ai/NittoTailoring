@@ -2,14 +2,37 @@ function normalizeApiBaseUrl(url: string): string {
   return url.trim().replace(/\/$/, '')
 }
 
+const SWEEP_PRODUCTION_API = 'https://api.sweepai.site'
+const SAME_ORIGIN_API_PROXY = '/sweep-api'
+
 const proxyTarget = import.meta.env.VITE_API_PROXY_TARGET?.trim()
 const configuredApiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim()
 
-// In dev, route through the Vite proxy to avoid CORS when hitting remote APIs.
-const apiBaseUrl =
-  import.meta.env.DEV && proxyTarget
-    ? '/sweep-api'
-    : normalizeApiBaseUrl(configuredApiBaseUrl ?? 'http://localhost:8000')
+function resolveApiBaseUrl(): string {
+  const configured = configuredApiBaseUrl ?? 'http://localhost:8000'
+
+  // Relative path — same-origin proxy (Vite in dev, Vercel rewrite in prod).
+  if (configured.startsWith('/')) {
+    return normalizeApiBaseUrl(configured)
+  }
+
+  const normalized = normalizeApiBaseUrl(configured)
+
+  // Dev: route through Vite proxy when a remote target is configured.
+  if (import.meta.env.DEV && proxyTarget) {
+    return SAME_ORIGIN_API_PROXY
+  }
+
+  // Prod: the Sweep API blocks browser CORS from custom funnel domains.
+  // vercel.json rewrites /sweep-api/* → api.sweepai.site/* (same pattern as local dev).
+  if (!import.meta.env.DEV && normalized === SWEEP_PRODUCTION_API) {
+    return SAME_ORIGIN_API_PROXY
+  }
+
+  return normalized
+}
+
+const apiBaseUrl = resolveApiBaseUrl()
 
 export const env = {
   typeformLiveId: import.meta.env.VITE_TYPEFORM_LIVE_ID ?? '01KTNBNYDMJSH7PKS373QG2AJF',
