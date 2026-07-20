@@ -3,39 +3,29 @@ import { PageShell } from '@/components/layout/PageShell'
 import { VimeoPlayer } from '@/components/media/VimeoPlayer'
 import { warmVimeoPlayer } from '@/components/media/vimeo'
 import { ApplyCta } from '@/components/funnel/ApplyCta'
+import { ApplyQuizOverlay } from '@/components/funnel/ApplyQuizOverlay'
 import { TestimonialBanner } from '@/components/funnel/TestimonialBanner'
-import { TypeformLiveEmbed } from '@/components/funnel/TypeformLiveEmbed'
-import { TypeformLiveOverlay } from '@/components/funnel/TypeformLiveOverlay'
-import { useTypeformPopup } from '@/hooks/useTypeformPopup'
-import { env } from '@/config/env'
-import { warmTypeformLiveEmbed } from '@/lib/typeformLive'
+import { useApplyQuizPopup } from '@/hooks/useApplyQuizPopup'
 import type { TestimonialVideo } from '@/content/testimonialVideos'
-import type { VslPageContent } from '@/types/quiz'
+import type { ApplyQuizVariant, VslPageContent } from '@/types/quiz'
 import styles from '@/pages/ApplyPage/ApplyPage.module.css'
 
 type VslLandingProps = {
   content: VslPageContent
+  quizVariant: ApplyQuizVariant
+  quizProductLabel?: string
   autoplayOnLoad?: boolean
   featuredTestimonials?: TestimonialVideo[]
-  typeformLiveId?: string
-  typeformInline?: boolean
-  typeformStepLabel?: string
 }
 
 export function VslLanding({
   content,
+  quizVariant,
+  quizProductLabel,
   autoplayOnLoad = true,
   featuredTestimonials,
-  typeformLiveId,
-  typeformInline = false,
-  typeformStepLabel,
 }: VslLandingProps) {
-  const { isTypeformOpen, openTypeform, closeTypeform, completeTypeform } = useTypeformPopup()
-  const resolvedTypeformLiveId = typeformLiveId ?? env.typeformLiveId
-
-  useEffect(() => {
-    warmTypeformLiveEmbed()
-  }, [])
+  const { isQuizOpen, openQuiz, closeQuiz, completeQuiz } = useApplyQuizPopup()
 
   useEffect(() => {
     warmVimeoPlayer(content.vimeoId, content.vimeoHash)
@@ -71,16 +61,9 @@ export function VslLanding({
             autoplayOnLoad={autoplayOnLoad}
           />
         </div>
-        {typeformInline ? (
-          <section className={styles.typeformSection} aria-label="Application form">
-            {typeformStepLabel ? <h3 className={styles.stepLabel}>{typeformStepLabel}</h3> : null}
-            <TypeformLiveEmbed liveId={resolvedTypeformLiveId} onComplete={completeTypeform} />
-          </section>
-        ) : (
-          <div className={styles.ctaWrapper}>
-            <ApplyCta label={content.ctaLabel} onClick={openTypeform} fullWidth />
-          </div>
-        )}
+        <div className={styles.ctaWrapper}>
+          <ApplyCta label={content.ctaLabel} onClick={openQuiz} fullWidth />
+        </div>
       </section>
 
       {featuredTestimonials && featuredTestimonials.length > 0 ? (
@@ -105,11 +88,12 @@ export function VslLanding({
         </section>
       )}
 
-      <TypeformLiveOverlay
-        isOpen={!typeformInline && isTypeformOpen}
-        liveId={resolvedTypeformLiveId}
-        onClose={closeTypeform}
-        onComplete={completeTypeform}
+      <ApplyQuizOverlay
+        isOpen={isQuizOpen}
+        variant={quizVariant}
+        productLabel={quizProductLabel}
+        onClose={closeQuiz}
+        onComplete={completeQuiz}
       />
     </PageShell>
   )

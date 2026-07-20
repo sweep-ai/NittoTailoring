@@ -8,7 +8,7 @@ A high-performance React funnel mirroring the [Alpha Reset System](https://booki
 |------|-------------|
 | `/` | Quiz funnel (root) |
 | `/training` | Personalized VSL after quiz (requires quiz session) |
-| `/applynow` | VSL landing page with Apply Now → Typeform modal |
+| `/applynow` | VSL landing page with Apply Now → custom application quiz |
 | `/thank-you` | Thank-you page with main VSL, FAQ videos, results section |
 | `/privacy-policy` | Privacy policy (data collection & marketing) |
 | `/terms` | Terms of service |
@@ -75,7 +75,6 @@ See [FUNNEL_STEPS.md](./FUNNEL_STEPS.md) for event names and curl examples.
 ### Other variables
 
 ```env
-VITE_TYPEFORM_LIVE_ID=01KTNBNYDMJSH7PKS373QG2AJF
 VITE_SITE_NAME=Alpha Reset System
 VITE_CONTACT_EMAIL=hello@example.com
 VITE_SITE_URL=https://your-production-domain.com
@@ -125,7 +124,6 @@ import logo from '@assets/logos/logo.png'
 
 - Vimeo iframes load only after user clicks play (click-to-play facade)
 - FAQ videos mount iframes only when accordion item is expanded
-- Typeform embed is lazy-loaded when the Apply Now modal opens
 - Route-level code splitting for apply and thank-you pages
 - Brotli/gzip compression on production builds
 
@@ -134,4 +132,3 @@ import logo from '@assets/logos/logo.png'
 - Vite + React 19 + TypeScript
 - React Router 7
 - CSS Modules + CSS custom properties
-- Typeform live embed (`embed.typeform.com/next/embed.js`)

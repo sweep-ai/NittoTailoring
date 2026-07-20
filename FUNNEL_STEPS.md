@@ -16,14 +16,14 @@ Configure these steps in **Sweep OS → Funnels → Alpha Reset System → Steps
 │  (multi-step quiz: name → questions → contact)
 ▼
 /training  Personalized training VSL
-│  (watch video → open Typeform)
+│  (watch video → application quiz: past attempt, work situation, commitment)
 ▼
 /thank-you  Post-application confirmation
    OR
 /booking → Calendly embed → /thank-you
 ```
 
-`/applynow` is a standalone apply VSL with an inline Typeform.
+`/applynow` is a standalone apply VSL with a full custom application quiz (root quiz questions + application questions).
 
 ---
 
@@ -37,8 +37,9 @@ Add these steps **in this order**. Event names are case-sensitive and must match
 | 2 | `form_submit` | Quiz Submitted | User completes the root quiz on `/` |
 | 3 | `training_page_view` | Training Page View | User views `/training` |
 | 4 | `apply_page_view` | Apply Page View | User views `/applynow` |
-| 5 | `booking_page_view` | Booking Page View | User views `/booking` |
-| 6 | `thank_you_page_view` | Thank You Page View | User views `/thank-you` |
+| 5 | `apply_submit` | Application Submitted | User completes the application quiz on `/training` or `/applynow` |
+| 6 | `booking_page_view` | Booking Page View | User views `/booking` |
+| 7 | `thank_you_page_view` | Thank You Page View | User views `/thank-you` |
 
 ---
 
@@ -172,7 +173,47 @@ Choice answer IDs are included in event metadata and `quiz_answers`. Email and p
 
 ---
 
-### Step 5 — `booking_page_view`
+### Step 5 — `apply_submit` + lead capture
+
+**Label:** Application Submitted
+
+**When it fires:** User completes the custom application quiz opened from `/training` or `/applynow`.
+
+**Next action:** Navigate to `/thank-you`.
+
+**Implementation:** `submitApplyLead()` in `src/lib/funnelTrack.ts` (called from `ApplyQuizFlow`)
+
+Sends **two** requests on submit:
+
+1. `POST /funnels/events` — `apply_submit` with `idempotency_key: apply_submit_{session_id}_{form_id}`
+2. `POST /funnels/leads` — creates/updates Client Board lead with contact info + `quiz_answers`
+
+**Form IDs:**
+- `/training` → `training-apply-quiz` (3 application questions; contact from root quiz session)
+- `/applynow` → `applynow-quiz` (full root quiz + 3 application questions)
+
+**Lead payload (training example):**
+
+```json
+{
+  "funnel_id": "ee46f8a6-ace5-4dd1-9279-abf58ae6ae9c",
+  "email": "lead@example.com",
+  "name": "Jane",
+  "phone": "+15551234567",
+  "instagram": "@handle",
+  "source": "apply",
+  "funnel_step_reached": "apply_submit",
+  "quiz_answers": {
+    "past_attempt": "A",
+    "work_situation": "B",
+    "commitment": "A"
+  }
+}
+```
+
+---
+
+### Step 6 — `booking_page_view`
 
 **Label:** Booking Page View
 
@@ -194,11 +235,11 @@ Choice answer IDs are included in event metadata and `quiz_answers`. Email and p
 
 ---
 
-### Step 6 — `thank_you_page_view`
+### Step 7 — `thank_you_page_view`
 
 **Label:** Thank You Page View
 
-**When it fires:** On route change to `/thank-you` (after Typeform submit or Calendly booking).
+**When it fires:** On route change to `/thank-you` (after application quiz submit or Calendly booking).
 
 **Implementation:** `FunnelTracker`
 
@@ -231,8 +272,7 @@ These routes do not fire funnel events today:
 
 | Step | Event name | Label | Trigger | Status |
 |------|------------|-------|---------|--------|
-| 7 | `form_start` | Quiz Started | User begins the root quiz | Planned |
-| 8 | `apply_submit` | Application Submitted | Typeform completed | Planned |
+| 8 | `form_start` | Quiz Started | User begins the root quiz | Planned |
 | 9 | `booking_scheduled` | Discovery Call Booked | Calendly `event_scheduled` on `/booking` | Planned |
 
 ---
@@ -275,8 +315,9 @@ Optional: `VITE_FUNNEL_TRACKING_ENABLED=false` disables all tracking. `VITE_FUNN
 - [ ] Add step 2: `form_submit` → **Quiz Submitted**
 - [ ] Add step 3: `training_page_view` → **Training Page View**
 - [ ] Add step 4: `apply_page_view` → **Apply Page View**
-- [ ] Add step 5: `booking_page_view` → **Booking Page View**
-- [ ] Add step 6: `thank_you_page_view` → **Thank You Page View**
+- [ ] Add step 5: `apply_submit` → **Application Submitted**
+- [ ] Add step 6: `booking_page_view` → **Booking Page View**
+- [ ] Add step 7: `thank_you_page_view` → **Thank You Page View**
 - [ ] Set `VITE_API_BASE_URL` in production `.env`
 - [ ] Deploy and verify events in **Funnels → Events** tab
 

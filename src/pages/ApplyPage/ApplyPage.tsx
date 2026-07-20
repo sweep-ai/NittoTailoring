@@ -12,7 +12,8 @@ export function ApplyPage() {
         vimeoId: applyContent.vimeoId,
         vimeoTitle: applyContent.vimeoTitle,
       }}
-      typeformLiveId={applyContent.typeformLiveId}
+      quizVariant="applynow"
+      quizProductLabel="Application"
     />
   )
 }

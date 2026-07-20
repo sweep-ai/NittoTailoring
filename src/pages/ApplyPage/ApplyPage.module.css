@@ -90,14 +90,6 @@
   margin-right: auto;
 }
 
-.typeformSection {
-  margin-top: var(--space-10);
-}
-
-.typeformSection .stepLabel {
-  margin-bottom: 0;
-}
-
 .bannerSection {
   margin-top: var(--space-12);
 }

@@ -17,6 +17,8 @@ export function TrainingPage() {
   return (
     <VslLanding
       content={content}
+      quizVariant="training"
+      quizProductLabel="Application"
       featuredTestimonials={getFeaturedTestimonialVideos(getAudience())}
     />
   )

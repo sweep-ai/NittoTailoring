@@ -1,27 +1,27 @@
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export function useTypeformPopup() {
+export function useApplyQuizPopup() {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
 
-  const openTypeform = useCallback(() => {
+  const openQuiz = useCallback(() => {
     setIsOpen(true)
   }, [])
 
-  const closeTypeform = useCallback(() => {
+  const closeQuiz = useCallback(() => {
     setIsOpen(false)
   }, [])
 
-  const completeTypeform = useCallback(() => {
+  const completeQuiz = useCallback(() => {
     setIsOpen(false)
     navigate('/thank-you')
   }, [navigate])
 
   return {
-    isTypeformOpen: isOpen,
-    openTypeform,
-    closeTypeform,
-    completeTypeform,
+    isQuizOpen: isOpen,
+    openQuiz,
+    closeQuiz,
+    completeQuiz,
   }
 }

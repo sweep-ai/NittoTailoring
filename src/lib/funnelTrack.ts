@@ -287,3 +287,44 @@ export async function submitQuizLead(input: QuizFormSubmitInput): Promise<void> 
     }),
   ])
 }
+
+type ApplyFormSubmitInput = {
+  email: string
+  name: string
+  phone: string
+  instagram: string
+  formId: string
+  quizAnswers: Record<string, unknown>
+}
+
+/** Track apply_submit + create/update Client Board lead after application quiz. */
+export async function submitApplyLead(input: ApplyFormSubmitInput): Promise<void> {
+  const sessionId = getSessionId()
+  const idempotencyKey = `apply_submit_${sessionId}_${input.formId}`
+
+  await Promise.race([
+    Promise.all([
+      trackEvent(
+        'apply_submit',
+        {
+          form_id: input.formId,
+          form_fields: Object.keys(input.quizAnswers),
+          ...input.quizAnswers,
+        },
+        { keepalive: true, idempotencyKey },
+      ),
+      submitLead({
+        email: input.email,
+        name: input.name,
+        phone: input.phone,
+        instagram: input.instagram,
+        source: 'apply',
+        funnel_step_reached: 'apply_submit',
+        quiz_answers: input.quizAnswers,
+      }),
+    ]),
+    new Promise<void>((resolve) => {
+      window.setTimeout(resolve, 1200)
+    }),
+  ])
+}
