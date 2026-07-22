@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { PageShell } from '@/components/layout/PageShell'
 import { VimeoPlayer } from '@/components/media/VimeoPlayer'
 import { warmVimeoPlayer } from '@/components/media/vimeo'
@@ -6,6 +6,7 @@ import { ApplyCta } from '@/components/funnel/ApplyCta'
 import { ApplyQuizOverlay } from '@/components/funnel/ApplyQuizOverlay'
 import { TestimonialBanner } from '@/components/funnel/TestimonialBanner'
 import { useApplyQuizPopup } from '@/hooks/useApplyQuizPopup'
+import { scrollToTop } from '@/lib/scrollToTop'
 import type { TestimonialVideo } from '@/content/testimonialVideos'
 import type { ApplyQuizVariant, VslPageContent } from '@/types/quiz'
 import styles from '@/pages/ApplyPage/ApplyPage.module.css'
@@ -26,16 +27,29 @@ export function VslLanding({
   featuredTestimonials,
 }: VslLandingProps) {
   const { isQuizOpen, openQuiz, closeQuiz, completeQuiz } = useApplyQuizPopup()
+  const [showBelowFold, setShowBelowFold] = useState(false)
+
+  useLayoutEffect(() => {
+    scrollToTop()
+  }, [])
 
   useEffect(() => {
     warmVimeoPlayer(content.vimeoId, content.vimeoHash)
   }, [content.vimeoId, content.vimeoHash])
 
   useEffect(() => {
-    featuredTestimonials?.forEach((video) => {
+    const frame = requestAnimationFrame(() => {
+      setShowBelowFold(true)
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [])
+
+  useEffect(() => {
+    if (!showBelowFold || !featuredTestimonials?.length) return
+    featuredTestimonials.forEach((video) => {
       warmVimeoPlayer(video.vimeoId, video.vimeoHash)
     })
-  }, [featuredTestimonials])
+  }, [showBelowFold, featuredTestimonials])
 
   return (
     <PageShell>
@@ -66,27 +80,29 @@ export function VslLanding({
         </div>
       </section>
 
-      {featuredTestimonials && featuredTestimonials.length > 0 ? (
-        <section className={styles.testimonialsSection} aria-label="Member testimonials">
-          <div className={styles.bannerSection}>
+      {showBelowFold ? (
+        featuredTestimonials && featuredTestimonials.length > 0 ? (
+          <section className={styles.testimonialsSection} aria-label="Member testimonials">
+            <div className={styles.bannerSection}>
+              <TestimonialBanner />
+            </div>
+            <div className={styles.testimonialsGrid}>
+              {featuredTestimonials.map((video) => (
+                <VimeoPlayer
+                  key={video.id}
+                  vimeoId={video.vimeoId}
+                  vimeoHash={video.vimeoHash}
+                  title={video.title}
+                />
+              ))}
+            </div>
+          </section>
+        ) : (
+          <section className={styles.bannerSection} aria-label="Member results">
             <TestimonialBanner />
-          </div>
-          <div className={styles.testimonialsGrid}>
-            {featuredTestimonials.map((video) => (
-              <VimeoPlayer
-                key={video.id}
-                vimeoId={video.vimeoId}
-                vimeoHash={video.vimeoHash}
-                title={video.title}
-              />
-            ))}
-          </div>
-        </section>
-      ) : (
-        <section className={styles.bannerSection} aria-label="Member results">
-          <TestimonialBanner />
-        </section>
-      )}
+          </section>
+        )
+      ) : null}
 
       <ApplyQuizOverlay
         isOpen={isQuizOpen}

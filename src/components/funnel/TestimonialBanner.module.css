@@ -25,7 +25,14 @@
   display: flex;
   width: max-content;
   gap: var(--space-4);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
   animation: scroll 80s linear infinite;
+}
+
+.root[data-in-view='false'] .track {
+  animation-play-state: paused;
 }
 
 .banner:hover .track {

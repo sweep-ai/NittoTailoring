@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   holdingBackQuestion,
@@ -6,7 +6,9 @@ import {
   resultQuestion,
 } from '@/content/quiz/questions'
 import { submitQuizLead } from '@/lib/funnelTrack'
+import { prefetchTrainingPage } from '@/lib/prefetchRoutes'
 import { saveQuizAnswers } from '@/lib/quizStorage'
+import { scrollToTop } from '@/lib/scrollToTop'
 import type { OccupationChoiceId, QuizAnswers, QuizChoiceId } from '@/types/quiz'
 import { FunnelToolShell } from './FunnelToolShell'
 import shellStyles from './FunnelToolShell.module.css'
@@ -69,13 +71,19 @@ export function QuizFlow({
   const [error, setError] = useState('')
   const [stepDirection, setStepDirection] = useState<'forward' | 'back'>('forward')
   const [isAdvancingChoice, setIsAdvancingChoice] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const step = steps[stepIndex]
   const progress = ((stepIndex + 1) / steps.length) * 100
   const isChoiceStep = step?.type === 'choice'
+  const isContactStep = step?.type === 'contact'
+
+  useEffect(() => {
+    if (isContactStep) prefetchTrainingPage()
+  }, [isContactStep])
 
   const canContinue = useMemo(() => {
-    if (!step) return false
+    if (!step || isSubmitting) return false
     switch (step.type) {
       case 'name':
         return form.name.trim().length >= 2
@@ -86,9 +94,12 @@ export function QuizFlow({
       default:
         return false
     }
-  }, [form, step])
+  }, [form, step, isSubmitting])
 
-  const submitQuiz = async (nextForm: FormState) => {
+  const submitQuiz = (nextForm: FormState) => {
+    if (isSubmitting) return
+    setIsSubmitting(true)
+
     const answers: QuizAnswers = {
       name: nextForm.name.trim(),
       result: nextForm.result as QuizChoiceId,
@@ -99,7 +110,7 @@ export function QuizFlow({
       phone: nextForm.phone.trim(),
     }
     saveQuizAnswers(answers)
-    await submitQuizLead({
+    submitQuizLead({
       email: answers.email,
       name: answers.name,
       phone: answers.phone,
@@ -110,7 +121,8 @@ export function QuizFlow({
         occupation: answers.occupation,
       },
     })
-    navigate('/training')
+    scrollToTop()
+    navigate('/training', { replace: true })
   }
 
   const goNext = () => {
@@ -161,8 +173,8 @@ export function QuizFlow({
           </button>
         )}
         {!isChoiceStep && (
-          <button type="button" className={styles.nextButton} onClick={goNext}>
-            {stepIndex === steps.length - 1 ? 'See my plan' : 'Continue'}
+          <button type="button" className={styles.nextButton} onClick={goNext} disabled={isSubmitting}>
+            {stepIndex === steps.length - 1 ? (isSubmitting ? 'Loading…' : 'See my plan') : 'Continue'}
           </button>
         )}
       </div>

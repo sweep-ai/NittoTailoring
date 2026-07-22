@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useEffect, useLayoutEffect } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { PageShell } from '@/components/layout/PageShell'
 import { VimeoPlayer } from '@/components/media/VimeoPlayer'
 import { warmVimeoPlayer } from '@/components/media/vimeo'
@@ -13,6 +13,10 @@ import { scrollToTop } from '@/lib/scrollToTop'
 import styles from './ThankYouPage.module.css'
 
 export function ThankYouPage() {
+  const resultsRef = useRef<HTMLElement>(null)
+  const [showResults, setShowResults] = useState(false)
+  const testimonialVideos = useMemo(() => getTestimonialVideos(getAudience()), [])
+
   useLayoutEffect(() => {
     scrollToTop()
   }, [])
@@ -20,6 +24,25 @@ export function ThankYouPage() {
   useEffect(() => {
     warmVimeoPlayer(thankYouContent.mainVimeoId)
   }, [])
+
+  useEffect(() => {
+    const node = resultsRef.current
+    if (!node) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setShowResults(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '300px' },
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <PageShell wide>
       <section className={styles.hero}>
@@ -62,19 +85,23 @@ export function ThankYouPage() {
         <FaqAccordion items={faqVideos} />
       </section>
 
-      <section className={styles.section}>
+      <section ref={resultsRef} className={styles.section}>
         <h3 className={styles.stepLabel}>{thankYouContent.step3Label}</h3>
-        <TestimonialBanner />
-        <div className={styles.testimonialsGrid}>
-          {getTestimonialVideos(getAudience()).map((video) => (
-            <VimeoPlayer
-              key={video.id}
-              vimeoId={video.vimeoId}
-              vimeoHash={video.vimeoHash}
-              title={video.title}
-            />
-          ))}
-        </div>
+        {showResults ? (
+          <>
+            <TestimonialBanner />
+            <div className={styles.testimonialsGrid}>
+              {testimonialVideos.map((video) => (
+                <VimeoPlayer
+                  key={video.id}
+                  vimeoId={video.vimeoId}
+                  vimeoHash={video.vimeoHash}
+                  title={video.title}
+                />
+              ))}
+            </div>
+          </>
+        ) : null}
       </section>
     </PageShell>
   )

@@ -16,14 +16,15 @@ Configure these steps in **Sweep OS → Funnels → Alpha Reset System → Steps
 │  (multi-step quiz: name → questions → contact)
 ▼
 /training  Personalized training VSL
-│  (watch video → application quiz: past attempt, work situation, commitment)
+│  (watch video → application quiz → /booking)
 ▼
-/thank-you  Post-application confirmation
-   OR
-/booking → Calendly embed → /thank-you
+/booking  Calendly embed
+│  (event scheduled)
+▼
+/thank-you  Post-booking confirmation
 ```
 
-`/applynow` is a standalone apply VSL with a full custom application quiz (root quiz questions + application questions).
+`/applynow` is a standalone apply VSL with a full custom application quiz that also continues to `/booking`.
 
 ---
 
@@ -179,7 +180,7 @@ Choice answer IDs are included in event metadata and `quiz_answers`. Email and p
 
 **When it fires:** User completes the custom application quiz opened from `/training` or `/applynow`.
 
-**Next action:** Navigate to `/thank-you`.
+**Next action:** Navigate to `/booking`.
 
 **Implementation:** `submitApplyLead()` in `src/lib/funnelTrack.ts` (called from `ApplyQuizFlow`)
 

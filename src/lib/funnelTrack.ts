@@ -256,34 +256,29 @@ type QuizFormSubmitInput = {
 }
 
 /** Track form_submit + create/update Client Board lead (see FUNNEL_INTEGRATION_GUIDE-1.md). */
-export async function submitQuizLead(input: QuizFormSubmitInput): Promise<void> {
+export function submitQuizLead(input: QuizFormSubmitInput): void {
   const formId = input.formId ?? FORM_ID_ROOT_QUIZ
   const sessionId = getSessionId()
   const idempotencyKey = buildFormSubmitIdempotencyKey(formId, sessionId)
 
-  await Promise.race([
-    Promise.all([
-      trackEvent(
-        'form_submit',
-        {
-          form_id: formId,
-          form_fields: ['name', 'result', 'holdingBack', 'instagram', 'occupation', 'email', 'phone'],
-          ...input.quizAnswers,
-        },
-        { keepalive: true, idempotencyKey },
-      ),
-      submitLead({
-        email: input.email,
-        name: input.name,
-        phone: input.phone,
-        instagram: input.instagram,
-        source: 'quiz',
-        funnel_step_reached: 'form_submit',
-        quiz_answers: input.quizAnswers,
-      }),
-    ]),
-    new Promise<void>((resolve) => {
-      window.setTimeout(resolve, 1200)
+  void Promise.all([
+    trackEvent(
+      'form_submit',
+      {
+        form_id: formId,
+        form_fields: ['name', 'result', 'holdingBack', 'instagram', 'occupation', 'email', 'phone'],
+        ...input.quizAnswers,
+      },
+      { keepalive: true, idempotencyKey },
+    ),
+    submitLead({
+      email: input.email,
+      name: input.name,
+      phone: input.phone,
+      instagram: input.instagram,
+      source: 'quiz',
+      funnel_step_reached: 'form_submit',
+      quiz_answers: input.quizAnswers,
     }),
   ])
 }
@@ -298,33 +293,28 @@ type ApplyFormSubmitInput = {
 }
 
 /** Track apply_submit + create/update Client Board lead after application quiz. */
-export async function submitApplyLead(input: ApplyFormSubmitInput): Promise<void> {
+export function submitApplyLead(input: ApplyFormSubmitInput): void {
   const sessionId = getSessionId()
   const idempotencyKey = `apply_submit_${sessionId}_${input.formId}`
 
-  await Promise.race([
-    Promise.all([
-      trackEvent(
-        'apply_submit',
-        {
-          form_id: input.formId,
-          form_fields: Object.keys(input.quizAnswers),
-          ...input.quizAnswers,
-        },
-        { keepalive: true, idempotencyKey },
-      ),
-      submitLead({
-        email: input.email,
-        name: input.name,
-        phone: input.phone,
-        instagram: input.instagram,
-        source: 'apply',
-        funnel_step_reached: 'apply_submit',
-        quiz_answers: input.quizAnswers,
-      }),
-    ]),
-    new Promise<void>((resolve) => {
-      window.setTimeout(resolve, 1200)
+  void Promise.all([
+    trackEvent(
+      'apply_submit',
+      {
+        form_id: input.formId,
+        form_fields: Object.keys(input.quizAnswers),
+        ...input.quizAnswers,
+      },
+      { keepalive: true, idempotencyKey },
+    ),
+    submitLead({
+      email: input.email,
+      name: input.name,
+      phone: input.phone,
+      instagram: input.instagram,
+      source: 'apply',
+      funnel_step_reached: 'apply_submit',
+      quiz_answers: input.quizAnswers,
     }),
   ])
 }

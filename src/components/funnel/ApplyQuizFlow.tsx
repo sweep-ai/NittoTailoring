@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   commitmentQuestion,
   pastAttemptQuestion,
@@ -10,6 +10,7 @@ import {
   resultQuestion,
 } from '@/content/quiz/questions'
 import { submitApplyLead } from '@/lib/funnelTrack'
+import { prefetchBookingPage } from '@/lib/prefetchRoutes'
 import { loadQuizAnswers, saveQuizAnswers } from '@/lib/quizStorage'
 import type {
   ApplicationAnswers,
@@ -143,6 +144,11 @@ export function ApplyQuizFlow({
   const progress = ((stepIndex + 1) / steps.length) * 100
   const isChoiceStep = step?.type === 'choice'
   const formId = variant === 'training' ? 'training-apply-quiz' : 'applynow-quiz'
+  const nearEnd = stepIndex >= Math.max(0, steps.length - 2)
+
+  useEffect(() => {
+    if (nearEnd) prefetchBookingPage()
+  }, [nearEnd])
 
   const canContinue = useMemo(() => {
     if (!step) return false
@@ -158,7 +164,7 @@ export function ApplyQuizFlow({
     }
   }, [form, step])
 
-  const submitApplication = async (nextForm: FormState) => {
+  const submitApplication = (nextForm: FormState) => {
     if (isSubmitting) return
     setIsSubmitting(true)
 
@@ -185,7 +191,7 @@ export function ApplyQuizFlow({
       saveQuizAnswers(answers)
     }
 
-    await submitApplyLead({
+    submitApplyLead({
       ...contact,
       formId,
       quizAnswers: toSnakeCaseAnswers({

@@ -81,10 +81,15 @@ export const testimonialVideos: TestimonialVideo[] = [
   },
 ]
 
+const featuredTestimonialVideosByAudience: Record<Audience, TestimonialVideo[]> = {
+  men: testimonialVideos.filter((video) => video.audience === 'men').slice(0, 3),
+  women: testimonialVideos.filter((video) => video.audience === 'women').slice(0, 3),
+}
+
 export function getTestimonialVideos(audience: Audience): TestimonialVideo[] {
   return testimonialVideos.filter((video) => video.audience === audience)
 }
 
 export function getFeaturedTestimonialVideos(audience: Audience): TestimonialVideo[] {
-  return getTestimonialVideos(audience).slice(0, 3)
+  return featuredTestimonialVideosByAudience[audience]
 }
