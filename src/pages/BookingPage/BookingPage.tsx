@@ -2,13 +2,11 @@ import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PageShell } from '@/components/layout/PageShell'
 import { TestimonialBanner } from '@/components/funnel/TestimonialBanner'
-import { CalendlyInline } from '@/components/media/CalendlyInline'
+import { BookingWidgetInline } from '@/components/media/BookingWidgetInline'
 import { bookingContent } from '@/content/booking'
 import { prefetchThankYouPage } from '@/lib/prefetchRoutes'
 import { scrollToTop } from '@/lib/scrollToTop'
 import styles from './BookingPage.module.css'
-
-const calendlyEmbedUrl = `${bookingContent.calendlyUrl}?hide_gdpr_banner=1&hide_landing_page_details=1`
 
 export function BookingPage() {
   const navigate = useNavigate()
@@ -41,10 +39,10 @@ export function BookingPage() {
             Booking confirmed. Taking you to your next steps…
           </p>
         ) : (
-          <CalendlyInline
-            url={calendlyEmbedUrl}
+          <BookingWidgetInline
+            url={bookingContent.bookingWidgetUrl}
             title={bookingContent.title}
-            onEventScheduled={handleEventScheduled}
+            onSubmitted={handleEventScheduled}
           />
         )}
       </section>
