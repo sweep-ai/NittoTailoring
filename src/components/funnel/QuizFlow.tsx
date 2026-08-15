@@ -17,14 +17,12 @@ import styles from './QuizFlow.module.css'
 type ChoiceStepKey = 'result' | 'holdingBack' | 'occupation'
 
 type Step =
-  | { type: 'name' }
   | { type: 'choice'; key: 'result' | 'holdingBack'; question: typeof resultQuestion | typeof holdingBackQuestion }
   | { type: 'instagram' }
   | { type: 'choice'; key: 'occupation'; question: typeof occupationQuestion }
   | { type: 'contact' }
 
 const steps: Step[] = [
-  { type: 'name' },
   { type: 'choice', key: 'result', question: resultQuestion },
   { type: 'choice', key: 'holdingBack', question: holdingBackQuestion },
   { type: 'instagram' },
@@ -85,12 +83,14 @@ export function QuizFlow({
   const canContinue = useMemo(() => {
     if (!step || isSubmitting) return false
     switch (step.type) {
-      case 'name':
-        return form.name.trim().length >= 2
       case 'instagram':
         return form.instagram.trim().length >= 2
       case 'contact':
-        return form.email.includes('@') && form.phone.trim().length >= 7
+        return (
+          form.name.trim().length >= 2 &&
+          form.email.includes('@') &&
+          form.phone.trim().length >= 7
+        )
       default:
         return false
     }
@@ -196,24 +196,6 @@ export function QuizFlow({
           stepDirection === 'forward' ? styles.stepEnterForward : styles.stepEnterBack
         }`}
       >
-      {step?.type === 'name' && (
-        <div className={styles.step}>
-          <h2 className={styles.prompt}>What should we call you?</h2>
-          <label className={styles.srOnly} htmlFor="quiz-name">
-            Your name
-          </label>
-          <input
-            id="quiz-name"
-            type="text"
-            className={styles.textInput}
-            placeholder="Your first name"
-            value={form.name}
-            onChange={(event) => setForm({ ...form, name: event.target.value })}
-            autoComplete="name"
-          />
-        </div>
-      )}
-
       {step?.type === 'choice' && (
         <div className={styles.step}>
           <h2 className={styles.prompt}>{step.question.prompt}</h2>
@@ -261,6 +243,18 @@ export function QuizFlow({
         <div className={styles.step}>
           <h2 className={styles.prompt}>Where should we send your training link?</h2>
           <div className={styles.contactFields}>
+            <label className={styles.fieldLabel} htmlFor="quiz-name">
+              Name
+            </label>
+            <input
+              id="quiz-name"
+              type="text"
+              className={styles.textInput}
+              placeholder="Your first name"
+              value={form.name}
+              onChange={(event) => setForm({ ...form, name: event.target.value })}
+              autoComplete="name"
+            />
             <label className={styles.fieldLabel} htmlFor="quiz-email">
               Email
             </label>

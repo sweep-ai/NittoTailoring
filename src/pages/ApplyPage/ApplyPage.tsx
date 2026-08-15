@@ -14,6 +14,7 @@ export function ApplyPage() {
       }}
       quizVariant="applynow"
       quizProductLabel="Application"
+      showClientBanner={true}
     />
   )
 }

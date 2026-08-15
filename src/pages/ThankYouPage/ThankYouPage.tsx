@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { PageShell } from '@/components/layout/PageShell'
+import { ClientLogoBanner } from '@/components/funnel/ClientLogoBanner'
 import { VimeoPlayer } from '@/components/media/VimeoPlayer'
 import { warmVimeoPlayer } from '@/components/media/vimeo'
 import { FaqAccordion } from '@/components/funnel/FaqAccordion'
@@ -44,7 +45,7 @@ export function ThankYouPage() {
   }, [])
 
   return (
-    <PageShell wide>
+    <PageShell wide header={<ClientLogoBanner />}>
       <section className={styles.hero}>
         <h2 className={styles.congrats}>{thankYouContent.congratulations}</h2>
         <p className={styles.subheadline}>{thankYouContent.subheadline}</p>

@@ -5,6 +5,7 @@ import { warmVimeoPlayer } from '@/components/media/vimeo'
 import { ApplyCta } from '@/components/funnel/ApplyCta'
 import { ApplyQuizOverlay } from '@/components/funnel/ApplyQuizOverlay'
 import { TestimonialBanner } from '@/components/funnel/TestimonialBanner'
+import { ClientLogoBanner } from '@/components/funnel/ClientLogoBanner'
 import { useApplyQuizPopup } from '@/hooks/useApplyQuizPopup'
 import { scrollToTop } from '@/lib/scrollToTop'
 import type { TestimonialVideo } from '@/content/testimonialVideos'
@@ -17,6 +18,7 @@ type VslLandingProps = {
   quizProductLabel?: string
   autoplayOnLoad?: boolean
   featuredTestimonials?: TestimonialVideo[]
+  showClientBanner?: boolean
 }
 
 export function VslLanding({
@@ -25,6 +27,7 @@ export function VslLanding({
   quizProductLabel,
   autoplayOnLoad = true,
   featuredTestimonials,
+  showClientBanner = false,
 }: VslLandingProps) {
   const { isQuizOpen, openQuiz, closeQuiz, completeQuiz } = useApplyQuizPopup()
   const [showBelowFold, setShowBelowFold] = useState(false)
@@ -52,7 +55,7 @@ export function VslLanding({
   }, [showBelowFold, featuredTestimonials])
 
   return (
-    <PageShell>
+    <PageShell header={showClientBanner ? <ClientLogoBanner /> : undefined}>
       <section className={styles.hero}>
         <p className={styles.eyebrow}>{content.eyebrow}</p>
         <h2 className={styles.headline}>{content.headline}</h2>

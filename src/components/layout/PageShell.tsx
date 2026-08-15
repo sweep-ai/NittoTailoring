@@ -7,12 +7,13 @@ type PageShellProps = {
   children: ReactNode
   wide?: boolean
   headerLabel?: string
+  header?: ReactNode
 }
 
-export function PageShell({ children, wide = false, headerLabel }: PageShellProps) {
+export function PageShell({ children, wide = false, headerLabel, header }: PageShellProps) {
   return (
     <div className={styles.shell}>
-      <FunnelHeader label={headerLabel} />
+      {header ?? <FunnelHeader label={headerLabel} />}
       <main className={`${styles.main} ${wide ? styles.wide : ''}`}>{children}</main>
       <FunnelFooter />
     </div>

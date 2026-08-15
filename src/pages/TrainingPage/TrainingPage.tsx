@@ -31,6 +31,7 @@ export function TrainingPage() {
       quizVariant="training"
       quizProductLabel="Application"
       featuredTestimonials={featuredTestimonials}
+      showClientBanner
     />
   )
 }
