@@ -56,7 +56,7 @@ export function ThankYouPage() {
           <h3 className={styles.stepLabel}>{thankYouContent.step1Label}</h3>
           <VimeoPlayer
             vimeoId={thankYouContent.mainVimeoId}
-            title="Alpha Reset System thank you video"
+            title="Executive Athlete Method thank you video"
             className={styles.mainVslVideo}
             autoplayOnLoad
           />

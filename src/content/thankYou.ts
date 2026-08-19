@@ -15,6 +15,6 @@ export const thankYouContent = {
   ],
   step2Label: 'Step 2: Watch These Commonly Asked Questions',
   step3Label:
-    'Step 3: See the results ARS members achieved and hear about their experience with us.',
+    'Step 3: See the results Executive Athlete Method members achieved and hear about their experience with us.',
   mainVimeoId: '1190599136',
 } as const

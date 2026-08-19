@@ -35,7 +35,7 @@ function resolveApiBaseUrl(): string {
 const apiBaseUrl = resolveApiBaseUrl()
 
 export const env = {
-  siteName: import.meta.env.VITE_SITE_NAME ?? 'Alpha Reset System',
+  siteName: import.meta.env.VITE_SITE_NAME ?? 'Executive Athlete Method',
   contactEmail: import.meta.env.VITE_CONTACT_EMAIL ?? '',
   apiBaseUrl,
   apiProxyTarget: proxyTarget ? normalizeApiBaseUrl(proxyTarget) : undefined,

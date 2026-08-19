@@ -1,11 +1,11 @@
-# Alpha Reset System — Funnel Steps
+# Executive Athlete Method — Funnel Steps
 
-Configure these steps in **Sweep OS → Funnels → Alpha Reset System → Steps**, in order.
+Configure these steps in **Sweep OS → Funnels → Executive Athlete Method → Steps**, in order.
 
 | Setting | Value |
 |---------|-------|
 | **Funnel ID** | `ee46f8a6-ace5-4dd1-9279-abf58ae6ae9c` |
-| **Site** | Alpha Reset System (Nitto Tailoring) |
+| **Site** | Executive Athlete Method (Nitto Tailoring) |
 
 ---
 
@@ -60,7 +60,7 @@ Add these steps **in this order**. Event names are case-sensitive and must match
 {
   "route": "/",
   "page_url": "https://example.com/",
-  "page_title": "Alpha Reset System",
+  "page_title": "Executive Athlete Method",
   "utm": { "source": "...", "medium": "...", "campaign": "..." },
   "referrer": "https://..."
 }
@@ -120,7 +120,7 @@ Sends **two** requests on submit:
   "holding_back": "B",
   "occupation": "C",
   "page_url": "https://example.com/",
-  "page_title": "Alpha Reset System",
+  "page_title": "Executive Athlete Method",
   "utm": {},
   "referrer": "..."
 }
@@ -144,7 +144,7 @@ Choice answer IDs are included in event metadata and `quiz_answers`. Email and p
 {
   "route": "/training",
   "page_url": "https://example.com/training",
-  "page_title": "Alpha Reset System",
+  "page_title": "Executive Athlete Method",
   "utm": {},
   "referrer": "..."
 }
@@ -166,7 +166,7 @@ Choice answer IDs are included in event metadata and `quiz_answers`. Email and p
 {
   "route": "/applynow",
   "page_url": "https://example.com/applynow",
-  "page_title": "Alpha Reset System",
+  "page_title": "Executive Athlete Method",
   "utm": {},
   "referrer": "..."
 }
@@ -228,7 +228,7 @@ Sends **two** requests on submit:
 {
   "route": "/booking",
   "page_url": "https://example.com/booking",
-  "page_title": "Alpha Reset System",
+  "page_title": "Executive Athlete Method",
   "utm": {},
   "referrer": "..."
 }
@@ -250,7 +250,7 @@ Sends **two** requests on submit:
 {
   "route": "/thank-you",
   "page_url": "https://example.com/thank-you",
-  "page_title": "Alpha Reset System",
+  "page_title": "Executive Athlete Method",
   "utm": {},
   "referrer": "..."
 }

@@ -1,6 +1,6 @@
-# Alpha Reset System — Booking Funnel
+# Executive Athlete Method — Booking Funnel
 
-A high-performance React funnel mirroring the [Alpha Reset System](https://booking.alpharesetsystem.com/applynow) apply and thank-you flows.
+A high-performance React funnel mirroring the [Executive Athlete Method](https://booking.alpharesetsystem.com/applynow) apply and thank-you flows.
 
 ## Routes
 
@@ -75,7 +75,7 @@ See [FUNNEL_STEPS.md](./FUNNEL_STEPS.md) for event names and curl examples.
 ### Other variables
 
 ```env
-VITE_SITE_NAME=Alpha Reset System
+VITE_SITE_NAME=Executive Athlete Method
 VITE_CONTACT_EMAIL=hello@example.com
 VITE_SITE_URL=https://your-production-domain.com
 VITE_AUDIENCE=men

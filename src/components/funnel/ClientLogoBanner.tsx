@@ -37,11 +37,11 @@ type ClientLogoBannerProps = {
 }
 
 export function ClientLogoBanner({
-  title = 'Alpha Reset System',
+  title = 'Executive Athlete Method',
   subtitle = 'TRAINED EMPLOYEES FROM',
 }: ClientLogoBannerProps) {
   return (
-    <header className={styles.banner} aria-label="Alpha Reset System">
+    <header className={styles.banner} aria-label="Executive Athlete Method">
       <div className={styles.container}>
         <p className={styles.title}>
           {title}
